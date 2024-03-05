@@ -2,8 +2,10 @@ let cool = require("cool-ascii-faces");
 let express = require("express");
 let bodyParser = require("body-parser");
 let contactAPI = require("./api-contacts");
+let dataStore = require("nedb");
 
 let app = express();
+let dbContacts = new dataStore();
 // Para que esto funcione debemos ejecutar el comando export PORT=11111 en WSL
 // Seguido de set | grep PORT
 const PORT = (process.env.PORT || 10000);
@@ -16,7 +18,7 @@ app.get("/cool", (req,res)=>{
     res.send(`<html><body><h1>${cool()}</h1></body></html>`);
 });
 
-contactAPI(app);
+contactAPI(app, dbContacts);
 
 
 
